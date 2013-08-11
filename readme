@@ -1,0 +1,30 @@
+this is tif file loading, mpi library based parallel computing
+
+mpi library and pthread library are used
+make sure your cluster has the same version of Linux
+to check it:
+file /usr/bin/file
+also check the Linux arch by:
+uname -m
+
+try to check MPI version by:
+ldd /your/mpi/bin/directory/hydra_pmi_proxy
+
+the dir is listed below:
+
+ctest: a list of tested submodules using C style. 
+|-- cpu_info: 	read out cpu core number and its information
+|-- dark_rms: 	old version of C code for dark mode, perform average and root mean square
+|		it will generate average image and stand derivation image, using multi threads
+|		and thread pool
+|-- data_sub:	old version of C code for both dark mode and data mode. after generating dark
+|		image, it performs data mode, which perform lld function, using thread pool
+|-- libtiff_load: first version of tif read	
+|-- tifseq_load: function to load multiple tif file 
+|-- mthread_dark_avg: first version of dark average operation using multi threads
+|-- mthread_dark_rms: first version of dark rms operation using multi threads
+|-- udp:	udp socket programming performs udp send and udp receive
+|-- mpi_lld:	pure MPI based perform dark mode, data mode and udp send and receive
+|-- op_scatter:	MPI and multi threads hybrid programming model using scatter function to assign
+|		image strips
+`-- op_rma:	MPI and multi threads hybrid programming model using remote memory acess technique

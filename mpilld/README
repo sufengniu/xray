@@ -1,0 +1,97 @@
+
+
+
+this is sufeng's preferred version of mpi based
+dark rms/ averaging
+and lld compression.
+
+type make to make
+
+main.c has the main function.
+
+we first run the mpi program  in an xterm.
+ ./run.perl main
+
+in another xterm we run
+
+./udp_client 55Fe_run5.tif
+
+The udp client will send images to the main prog, which will do 
+lld compression
+
+as of now, the main prog is in lld mode. there is also a dark average
+mode.
+
+
+There is a file called host file:
+
+more hostfile
+iocfccd1:7
+
+hostfile defines the mpi server name and number of cores to use.
+
+To use 10G link. Set host file to:
+10.0.5.50:7
+
+Do ifconfig to see all the net devices
+eth5 is the 10GB link on fccdioc1
+
+
+To see config and speed of card from the bootup messages:
+
+dmesg | grep eth5 | less
+
+There is a perl program that runs everything.
+Prog is called run.main.
+
+There is a line,
+%program_nodes = ("main", 7);
+
+that must be set to run on 7 cores. So there are two places to set cores,
+in hostfiles and run.main
+
+The perl program just runs this program:
+
+mpiexec -n 7 -f hostfile ./main
+
+
+The code is all in /mnt
+The reason for this is that verious servers have to have access to a shared area on the disk. and mnt is shared over NFS
+
+So mpiexec and main are on the mnt area.
+
+
+note that all the mpi libs are in  /mnt
+the mpi compiler is mpicc, and is in mnt also.
+
+for help do 
+man mpiexec
+
+Still a prob w. iocfccd1, iocfccd3 conn. sufeng is working on it.
+
+In /mnt/mpi
+Totalview is the debugger, that is expired
+mpich-install is mpi libs
+
+lab is sufengs work
+
+
+
+
+To debug the program
+totalview is expensive and out of license. so sufeng found another way.
+
+To launch 7 cores, each core gets an xterm. Then we can see each thing run. It uses
+gdb to debug, so we can break each thread running...
+mpiexec -np 7 xterm -e gdb main
+
+
+
+There are bad areas in fccd camera
+so in sub.c there is code to mask it out...
+
+
+
+
+
+
