@@ -1,0 +1,22 @@
+
+this is prototype code for X-ray camera data preprocessing based on ATCA chassis
+
+the obj dir need to be created
+
+project file structure
+.
+|-- include
+|   |-- platform_init.h		// initialization, mem allocation and free
+|   |-- rms.h			// dark rms caculation and dark avg operation
+|   |-- sys_config.h		// system configure information
+|   `-- tif.h			// tif lib for tif file loading
+|-- lib
+|   |-- thr_pool.c		// thread pool library
+|   `-- thr_pool.h
+|-- makefile
+|-- obj				// all generated .o files here
+`-- src
+    |-- mthreads_dark_rms.c	// main function
+    |-- platform_init.c
+    |-- rms.c
+    `-- tif.c
